@@ -1,23 +1,36 @@
-<ngb-carousel *ngIf="images">
-  <ng-template ngbSlide>
-    <img [src]="images[0]" alt="Random first slide">
-    <div class="carousel-caption">
-      <h3>First slide label</h3>
-      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-    </div>
-  </ng-template>
-  <ng-template ngbSlide>
-    <img [src]="images[1]" alt="Random second slide">
-    <div class="carousel-caption">
-      <h3>Second slide label</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </div>
-  </ng-template>
-  <ng-template ngbSlide>
-    <img [src]="images[2]" alt="Random third slide">
-    <div class="carousel-caption">
-      <h3>Third slide label</h3>
-      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-    </div>
-  </ng-template>
-</ngb-carousel>
+<div class="header bg-dark">
+<div class="container">
+<div class="row">
+
+<nav class="navbar navbar-expand-lg navbar-dark col-lg-12">
+  <a class="navbar-brand text-info" routerLink="/"><b>Fragment</b></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/">HomePage <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/signup">SignUp</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">WIKI</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0 col-md-offset-2">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search...">
+        <div class="input-group-append">
+          <button class="btn btn-secondary active" type="button">search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</nav>
+
+</div>
+</div>
+</div>
