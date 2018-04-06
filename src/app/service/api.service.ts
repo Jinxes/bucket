@@ -68,4 +68,32 @@ export class ApiService {
     );
   }
 
+  public put(url: string, data: object): Observable<HttpResponse<any>> {
+    this.httpOptions['observe'] = 'response';
+    return this.http.put<any>(
+      url, data, this.httpOptions
+    );
+  }
+
+  public delete(url: string): Observable<HttpResponse<any>> {
+    this.httpOptions['observe'] = 'response';
+    return this.http.delete<any>(
+      url, this.httpOptions
+    );
+  }
+
+  public head(url: string): Observable<HttpResponse<any>> {
+    this.httpOptions['observe'] = 'response';
+    return this.http.head<any>(
+      url, this.httpOptions
+    );
+  }
+
+  public patch(url: string, data: object): Observable<HttpResponse<any>> {
+    this.httpOptions['observe'] = 'response';
+    return this.http.patch<any>(
+      url, data, this.httpOptions
+    );
+  }
+
 }
