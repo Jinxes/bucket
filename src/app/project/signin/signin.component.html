@@ -1,6 +1,6 @@
 <div class="content">
   <div class="container">
-    <div class="row">
+    <div class="row mt-5">
     <div class="card col-lg-6 col-sm-12 left-bar">
       <h1 class="display-6 title">入住小站</h1>
       <hr class="my-2">
@@ -18,14 +18,13 @@
     <span class="col-lg-4 col-sm-12 right-bar">
       <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="signin-mail1">电子邮箱</label>
+          <label for="signin-mail1" class="pointer">电子邮箱</label>
           <input
             type="email"
             class="form-control"
             formControlName="email"
             id="signin-mail1"
             name="email"
-            aria-describedby="emailHelp"
             placeholder="登录邮箱"
           >
           <small
@@ -35,7 +34,7 @@
             id="emailHelp"
             class="form-text text-muted"
           >
-            <span class="text-warning">邮箱格式有误</span>
+            <span class="color-tomato">邮箱格式有误</span>
           </small>
         </div>
         <div class="form-group">
@@ -46,7 +45,6 @@
             id="signin-password"
             formControlName="password"
             name="password"
-            aria-describedby="pwdHelp"
             placeholder="登录密码"
           >
           <small
@@ -56,7 +54,7 @@
             id="pwdHelp"
             class="form-text text-muted"
           >
-            <span class="text-warning">密码长度为 6 到 16 位半角字符</span>
+            <span class="color-tomato">密码长度为 6 到 16 位半角字符</span>
           </small>
         </div>
         <button type="submit" class="btn btn-info">登 录</button>

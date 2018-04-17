@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { UserService } from '../../service/user.service';
-import { CookieService } from 'ng2-cookies';
-import { ApiService } from '../../service/api.service';
-import { UtilService } from '../../service/util.service';
 
 @Component({
   selector: 'app-signin',

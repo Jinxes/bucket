@@ -13,6 +13,7 @@ import { UserService } from './service/user.service';
 import { CookieService } from 'ng2-cookies';
 import { ApiService } from './service/api.service';
 import { UtilService } from './service/util.service';
+import { FieldComponent } from './component/form/field/field.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { UtilService } from './service/util.service';
     AppComponent,
     HeaderComponent,
     SigninComponent,
-    FooterComponent
+    FooterComponent,
+    FieldComponent
   ],
   imports: [
     NgbModule.forRoot(),

@@ -15,13 +15,15 @@ import { HeaderComponent } from './project/header/header.component';
 import { FooterComponent } from './project/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FieldComponent } from './component/form/field/field.component';
 
 export const configureTestingModules = {
   declarations: [
     AppComponent,
     SigninComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    FieldComponent,
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/'},
