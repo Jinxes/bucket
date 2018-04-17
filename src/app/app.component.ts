@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserService } from './service/user.service';
+import { CookieService } from 'ng2-cookies';
 
 @Component({
   selector: 'app-root',

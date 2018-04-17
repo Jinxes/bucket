@@ -3,16 +3,19 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './project/header/header.component';
 import { FooterComponent } from './project/footer/footer.component';
 import { SigninComponent } from './project/signin/signin.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { APP_BASE_HREF } from '@angular/common';
+import { configureTestingModules } from './app.test.factory';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        HeaderComponent,
-        FooterComponent,
-        SigninComponent
-      ],
-    }).compileComponents();
+    TestBed.configureTestingModule(
+      configureTestingModules
+    ).compileComponents();
   }));
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -23,11 +26,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('app');
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
   }));
 });
