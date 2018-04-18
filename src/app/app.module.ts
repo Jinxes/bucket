@@ -13,6 +13,8 @@ import { UserService } from './service/user.service';
 import { CookieService } from 'ng2-cookies';
 import { ApiService } from './service/api.service';
 import { UtilService } from './service/util.service';
+import { NotFoundComponent } from './project/not-found/not-found.component';
+import { SignupComponent } from './project/signup/signup.component';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { UtilService } from './service/util.service';
     HeaderComponent,
     SigninComponent,
     FooterComponent,
+    NotFoundComponent,
+    SignupComponent,
   ],
   imports: [
     NgbModule.forRoot(),

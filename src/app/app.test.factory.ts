@@ -15,6 +15,7 @@ import { HeaderComponent } from './project/header/header.component';
 import { FooterComponent } from './project/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NotFoundComponent } from './project/not-found/not-found.component';
 
 export const configureTestingModules = {
   declarations: [
@@ -22,6 +23,7 @@ export const configureTestingModules = {
     SigninComponent,
     HeaderComponent,
     FooterComponent,
+    NotFoundComponent,
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/'},
