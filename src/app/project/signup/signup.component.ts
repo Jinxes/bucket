@@ -23,7 +23,11 @@ export class SignupComponent implements OnInit {
       email: ['', [
         Validators.required, Validators.minLength(4), Validators.email
       ]],
+      message: [false],
       password: ['', [
+        Validators.required, Validators.minLength(6), Validators.maxLength(16)
+      ]],
+      passwordRe: ['', [
         Validators.required, Validators.minLength(6), Validators.maxLength(16)
       ]]
     });
@@ -31,8 +35,20 @@ export class SignupComponent implements OnInit {
 
   public onSubmit() {
     if (this.signupForm.valid) {
-      console.log(this.userService.userSignin(this.signupForm.value));
+      console.log(this.signupForm.value);
     }
+  }
+
+  public toStepOne() {
+    this.step = 1;
+  }
+
+  public toStepTwo() {
+    this.step = 2;
+  }
+
+  public toStepThree() {
+    this.step = 3;
   }
 
   public currentStep(s: Number) {
@@ -41,6 +57,10 @@ export class SignupComponent implements OnInit {
     } else {
       return 'gainsboro-color';
     }
+  }
+
+  public isHidden(num: Number): Boolean {
+    return (num !== this.step);
   }
 
 }
