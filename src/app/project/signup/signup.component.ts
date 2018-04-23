@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, NgForm, ValidatorFn, AbstractControl, FormControl} from '@angular/forms';
 import { UserService } from '../../service/user.service';
 
 @Component({
@@ -19,24 +19,40 @@ export class SignupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.signupForm = this.formBuilder.group({
-      email: ['', [
-        Validators.required, Validators.minLength(4), Validators.email
-      ]],
-      message: [false],
-      password: ['', [
-        Validators.required, Validators.minLength(6), Validators.maxLength(16)
-      ]],
-      passwordRe: ['', [
-        Validators.required, Validators.minLength(6), Validators.maxLength(16)
-      ]]
-    });
+    this.signupForm = new FormGroup({
+      email: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.email
+      ]),
+      nickname: new FormControl('', Validators.required),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(16)
+      ]),
+      passwordRe: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(16)
+      ]),
+      gender: new FormControl(2, [
+        Validators.required
+      ])
+    }, this.passwordMatchValidator);
+  }
+
+  public passwordMatchValidator(g: FormGroup) {
+    return g.get('password').value === g.get('passwordRe').value
+      ? null : {'mismatch': true};
   }
 
   public onSubmit() {
-    if (this.signupForm.valid) {
-      console.log(this.signupForm.value);
+    if (this.signupForm.invalid) {
+      console.log(this.signupForm);
+      alert('您输入的信息有错误，请检查');
     }
+    console.log(this.signupForm);
   }
 
   public toStepOne() {
@@ -51,8 +67,8 @@ export class SignupComponent implements OnInit {
     this.step = 3;
   }
 
-  public currentStep(s: Number) {
-    if (s === this.step) {
+  public currentStep(step: Number) {
+    if (step === this.step) {
       return 'royal-color';
     } else {
       return 'gainsboro-color';
