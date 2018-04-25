@@ -1,4 +1,4 @@
-import { SigninStruct } from '../structs/signin/data.struct';
+import { SigninStruct, SignupStruct } from '../structs/user.struct';
 import {
   HttpClient,
   HttpHeaders,
@@ -15,8 +15,9 @@ export class UserService {
 
   public createUrl = '/api/user';
   public emailUrl = '/api/user/emailExist';
-  public signinUrl = '/api/user/signin';
+  public signinUrl = '/api/user/user';
   public signoutUrl = '/api/user/signout';
+  public signupUrl = '/api/user/';
 
   public constructor(
     public http: HttpClient,
@@ -25,14 +26,19 @@ export class UserService {
     public utilService: UtilService
   ) { }
 
+  public  signup(signupData: SignupStruct): Observable<HttpResponse<any>> {
+    // this.apiService.httpOptions['observe'] = 'response';
+    return this.apiService.post(this.signupUrl, signupData);
+  }
+
+  public signin(signinData: SigninStruct): Observable<HttpResponse<any>> {
+    this.apiService.httpOptions['observe'] = 'response';
+    return this.apiService.post(this.signinUrl, signinData);
+  }
+
   public matchEmail(email: string): Observable<HttpResponse<any>> {
     this.apiService.httpOptions['observe'] = 'response';
     return this.apiService.get(this.emailUrl + '?email=' + email);
-  }
-
-  public userSignin(signinData: SigninStruct): Observable<HttpResponse<any>> {
-    this.apiService.httpOptions['observe'] = 'response';
-    return this.apiService.post(this.signinUrl, signinData);
   }
 
   public signout(): void {
@@ -46,7 +52,7 @@ export class UserService {
         }, 500);
       }
     }, (error) => {
-      if (error.status === 409) {
+      if (error.status === 422) {
         alert(error.error.mess);
       }
       window.location.reload(true);

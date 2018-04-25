@@ -31,6 +31,7 @@ export class ApiService {
   public BANDWIDTH_LIMIT_EXCEEDED = 509;
 
   public MIME_JSON = 'application/json';
+  public MIME_URL = 'application/x-www-form-urlencoded';
   public MIME_XML = 'application/xml';
   public MIME_HTML = 'text/html';
   public MIME_XHTML = 'application/xhtml+xml';
@@ -38,14 +39,18 @@ export class ApiService {
   public MIME_PDF = 'application/pdf';
   public MIME_EXCEL = 'application/vnd.ms-excel';
   public MIME_CSV = 'text/csv';
+  public baseUrl = 'http://localhost:8080';
 
   public httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': this.MIME_JSON,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+      'Content-Type': this.MIME_URL,
       'Authorization': this.utilService.getToken(),
     }),
     reportProgress: true,
-    withCredentials: true,
+    // withCredentials: true,
   };
 
   constructor(
@@ -57,42 +62,46 @@ export class ApiService {
   public get(url: string): Observable<HttpResponse<any>> {
     this.httpOptions['observe'] = 'response';
     return this.http.get<any>(
-      url, this.httpOptions
+      this.baseUrl + url, this.httpOptions
     );
   }
 
   public post(url: string, data: object): Observable<HttpResponse<any>> {
     this.httpOptions['observe'] = 'response';
+    const body = new URLSearchParams();
+    for (const key of Object.keys(data)) {
+      body.set(key, data[key]);
+    }
     return this.http.post<any>(
-      url, data, this.httpOptions
+      this.baseUrl + url, body.toString(), this.httpOptions
     );
   }
 
   public put(url: string, data: object): Observable<HttpResponse<any>> {
     this.httpOptions['observe'] = 'response';
     return this.http.put<any>(
-      url, data, this.httpOptions
+      this.baseUrl + url, data, this.httpOptions
     );
   }
 
   public delete(url: string): Observable<HttpResponse<any>> {
     this.httpOptions['observe'] = 'response';
     return this.http.delete<any>(
-      url, this.httpOptions
+      this.baseUrl + url, this.httpOptions
     );
   }
 
   public head(url: string): Observable<HttpResponse<any>> {
     this.httpOptions['observe'] = 'response';
     return this.http.head<any>(
-      url, this.httpOptions
+      this.baseUrl + url, this.httpOptions
     );
   }
 
   public patch(url: string, data: object): Observable<HttpResponse<any>> {
     this.httpOptions['observe'] = 'response';
     return this.http.patch<any>(
-      url, data, this.httpOptions
+      this.baseUrl + url, data, this.httpOptions
     );
   }
 

@@ -29,7 +29,7 @@ export class SigninComponent implements OnInit {
 
   public onSubmit() {
     if (this.signinForm.valid) {
-      console.log(this.userService.userSignin(this.signinForm.value));
+      console.log(this.userService.signin(this.signinForm.value));
     }
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, NgForm, ValidatorFn, AbstractControl, FormControl} from '@angular/forms';
 import { UserService } from '../../service/user.service';
+import {HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -49,10 +50,14 @@ export class SignupComponent implements OnInit {
 
   public onSubmit() {
     if (this.signupForm.invalid) {
-      console.log(this.signupForm);
       alert('您输入的信息有错误，请检查');
     }
     console.log(this.signupForm);
+    const response = this.userService.signup(this.signupForm.value);
+    console.log(response);
+    response.subscribe(() => {
+      alert(111);
+    })
   }
 
   public toStepOne() {
