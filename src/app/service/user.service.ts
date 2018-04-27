@@ -9,15 +9,33 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ng2-cookies';
 import { ApiService } from './api.service';
 import { UtilService } from './util.service';
+import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
 
 @Injectable()
 export class UserService {
 
   public createUrl = '/api/user';
-  public emailUrl = '/api/user/emailExist';
+  public emailUrl = '/api/user/email';
   public signinUrl = '/api/user/user';
   public signoutUrl = '/api/user/signout';
   public signupUrl = '/api/user/';
+
+  public emailTest(): AsyncValidatorFn {
+    return (control: AbstractControl) => {
+      return new Promise((resolve, reject) => {
+        const subscribeAble = this.matchEmail(control.value);
+        subscribeAble.subscribe(data => {
+          const message = '这个电子邮件已经被注册了';
+          control.setErrors({
+            emailTest: message
+          });
+          reject(message);
+        }, error => {
+          resolve({});
+        });
+      });
+    };
+  }
 
   public constructor(
     public http: HttpClient,

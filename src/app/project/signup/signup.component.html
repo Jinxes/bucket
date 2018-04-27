@@ -1,147 +1,96 @@
 <div class="content">
   <div class="container">
-    <div class="row mt-5 row-md-6 offset-md-1">
-      <div class="col-md text-center p-2 step d-flex flex-row pointer" (click)="toStepOne()">
-        <span class="radius step-box {{currentStep(1)}}">
-          <strong>1</strong>
-        </span>
-        <span class="step-text pop-dark">注册电子邮箱</span>
-      </div>
-      <div class="col-md text-center p-2 step d-flex flex-row pointer" (click)="toStepTwo()">
-        <span class="radius step-box {{currentStep(2)}}">
-          <strong>2</strong>
-        </span>
-        <span class="step-text pop-dark">填写基本信息</span>
-      </div>
-      <div class="col-md text-center p-2 step d-flex flex-row pointer" (click)="toStepThree()">
-        <span class="radius step-box {{currentStep(3)}}">
-          <strong>3</strong>
-        </span>
-        <span class="step-text pop-dark">完成注册</span>
-      </div>
-    </div>
-    <hr class="my-4">
-
     <div class="row">
-      <div class="col-md-6 offset-md-2">
+      <div class="col-lg-6 offset-lg-3 jumbotron text-dark">
+      <h3 class="h3 text-center">Fragment 通行证</h3>
+      <hr class="my-4">
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <!-- Step One -->
-        <div [class.hidden]="isHidden(1)">
-          <div class="form-group row">
-            <label for="signup-email" class="col-sm-3 col-form-label pointer">电子邮件</label>
-            <div class="col-md-9">
-              <input
-                type="email"
-                class="form-control"
-                formControlName="email"
-                id="signup-email"
-                name="email"
-                placeholder="电子邮件"
-              />
-              <small
-              *ngIf="signupForm.controls.email.invalid &&
-                (signupForm.controls.email.dirty ||
-                signupForm.controls.email.touched)"
-                id="emailHelp"
-                class="form-text text-muted"
-              >
-                <span class="color-tomato">邮箱格式有误</span>
-              </small>
-            </div>
+          <div class="form-group">
+            <label for="email" class="pointer">电子邮件<small>（此电子邮件将用于登录）</small></label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              id="email"
+              name="email"
+              placeholder="电子邮件"
+            />
+            <small
+            *ngIf="signupForm.controls.email.invalid &&
+              (signupForm.controls.email.dirty ||
+              signupForm.controls.email.touched)"
+              id="emailHelp"
+              class="form-text text-muted"
+            >
+              <span class="color-tomato">{{emailValidText()}}</span>
+            </small>
           </div>
-          <div class="form-group row">
-            <div class="col-md-9 offset-md-3">
-              <button type="button" (click)="toStepTwo()" class="btn btn-primary w-50">
-                下一步
-              </button>
-            </div>
-          </div>
-        </div>
 
-      <!-- Step Two -->
-        <div [class.hidden]="isHidden(2)">
-          <div class="form-group row">
-            <label for="signup-password" class="col-md-3 col-form-label pointer">设置密码</label>
-            <div class="col-md-9">
-              <input
-                type="password"
-                class="form-control"
-                formControlName="password"
-                id="signup-password"
-                name="password"
-                placeholder="设置密码"
-              />
-              <small
-              *ngIf="signupForm.controls.password.invalid &&
-                (signupForm.controls.password.dirty ||
-                signupForm.controls.password.touched)"
-                id="passwordHelp"
-                class="form-text text-muted"
-              >
-                <span class="color-tomato">密码格式有误</span>
-              </small>
-            </div>
+          <div class="form-group">
+            <label for="signup-password" class="pointer">设置密码</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              id="signup-password"
+              name="password"
+              placeholder="设置密码"
+            />
+            <small
+            *ngIf="signupForm.controls.password.invalid &&
+              (signupForm.controls.password.dirty ||
+              signupForm.controls.password.touched)"
+              id="passwordHelp"
+              class="form-text text-muted"
+            >
+              <span class="color-tomato">密码格式有误</span>
+            </small>
           </div>
-          <div class="form-group row">
-            <label for="signup-password-re" class="col-md-3 col-form-label pointer">确认密码</label>
-            <div class="col-md-9">
-              <input
-                type="password"
-                class="form-control"
-                formControlName="passwordRe"
-                id="signup-password-re"
-                name="password-re"
-                placeholder="确认密码"
-              />
-              <small
-              *ngIf="signupForm.errors &&
-                signupForm.errors.mismatch &&
-                (signupForm.controls.passwordRe.dirty ||
-                signupForm.controls.passwordRe.touched)"
-                id="passwordReHelp"
-                class="form-text text-muted"
-              >
-                <span class="color-tomato">密码输入不匹配</span>
-              </small>
-            </div>
+          <div class="form-group">
+            <label for="signup-password-re" class="pointer">确认密码</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="passwordRe"
+              id="signup-password-re"
+              name="password-re"
+              placeholder="确认密码"
+            />
+            <small
+            *ngIf="signupForm.errors &&
+              signupForm.errors.mismatch &&
+              (signupForm.controls.passwordRe.dirty ||
+              signupForm.controls.passwordRe.touched)"
+              id="passwordReHelp"
+              class="form-text text-muted"
+            >
+              <span class="color-tomato">密码输入不匹配</span>
+            </small>
           </div>
-          <div class="form-group row">
-            <div class="col-md-9 offset-md-3">
-              <button type="button" (click)="toStepThree()" class="btn btn-primary w-50">
-                下一步
-              </button>
-            </div>
-          </div>
-        </div>
 
-        <!-- Step Three -->
-
-        <div [class.hidden]="isHidden(3)">
-          <div class="form-group row">
-            <label for="signup-nickname" class="col-sm-3 col-form-label pointer">你的昵称</label>
-            <div class="col-md-9">
-              <input
-                type="password"
-                class="form-control"
-                formControlName="nickname"
-                id="signup-nickname"
-                name="nickname"
-                placeholder="昵称"
-              />
-              <small
-                *ngIf="signupForm.controls.nickname.invalid &&
-                (signupForm.controls.nickname.dirty ||
-                signupForm.controls.nickname.touched)"
-                id="nicknameHelp"
-                class="form-text text-muted"
-              >
-                <span class="color-tomato">昵称不能为空</span>
-              </small>
-            </div>
+          <div class="form-group">
+            <label for="signup-nickname" class="pointer">你的昵称（<small>昵称对所有用户可见</small>）</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="nickname"
+              id="signup-nickname"
+              name="nickname"
+              placeholder="昵称"
+            />
+            <small
+              *ngIf="signupForm.controls.nickname.invalid &&
+              (signupForm.controls.nickname.dirty ||
+              signupForm.controls.nickname.touched)"
+              id="nicknameHelp"
+              class="form-text text-muted"
+            >
+              <span class="color-tomato">昵称不能为空</span>
+            </small>
           </div>
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label">你的性别</label>
-            <div class="col-md-9">
+          <div class="form-group">
+            <label class="pointer">你的性别</label>
+            <div class="col-lg-12">
               <div class="form-check form-check-inline">
                 <input
                   class="form-check-input"
@@ -178,14 +127,13 @@
               </div>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col-md-10 offset-md-3">
+          <div class="form-group">
+            <div>
               <button type="submit" class="btn btn-primary w-50">
                 提 交
               </button>
             </div>
           </div>
-        </div>
       </form>
       </div>
     </div>
