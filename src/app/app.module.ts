@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
@@ -15,6 +15,8 @@ import { ApiService } from './service/api.service';
 import { UtilService } from './service/util.service';
 import { NotFoundComponent } from './project/not-found/not-found.component';
 import { SignupComponent } from './project/signup/signup.component';
+import { ModalComponent } from './component/modal/modal.component';
+import { ModalService } from './service/modal.service';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { SignupComponent } from './project/signup/signup.component';
     FooterComponent,
     NotFoundComponent,
     SignupComponent,
+    ModalComponent,
   ],
   imports: [
     NgbModule.forRoot(),
@@ -38,7 +41,8 @@ import { SignupComponent } from './project/signup/signup.component';
     UserService,
     CookieService,
     ApiService,
-    UtilService
+    UtilService,
+    ModalService
   ],
   bootstrap: [
     AppComponent

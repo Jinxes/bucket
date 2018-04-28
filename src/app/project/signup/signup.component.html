@@ -6,7 +6,7 @@
       <hr class="my-4">
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
-            <label for="email" class="pointer">电子邮件<small>（此电子邮件将用于登录）</small></label>
+            <label for="email" class="pointer">电子邮件<small>（此电子邮件将用于<a routerLink="/signin">登录</a>）</small></label>
             <input
               type="email"
               class="form-control"
@@ -37,13 +37,14 @@
               placeholder="设置密码"
             />
             <small
-            *ngIf="signupForm.controls.password.invalid &&
+            *ngIf="(signupForm.controls.password.invalid ||
+              signupForm.controls.password.errors) &&
               (signupForm.controls.password.dirty ||
               signupForm.controls.password.touched)"
               id="passwordHelp"
               class="form-text text-muted"
             >
-              <span class="color-tomato">密码格式有误</span>
+              <span class="color-tomato">{{validText('password', '密码格式不正确')}}</span>
             </small>
           </div>
           <div class="form-group">
@@ -85,7 +86,7 @@
               id="nicknameHelp"
               class="form-text text-muted"
             >
-              <span class="color-tomato">昵称不能为空</span>
+              <span class="color-tomato">{{validText('nickname', '昵称不能为空')}}</span>
             </small>
           </div>
           <div class="form-group">
@@ -126,6 +127,15 @@
                 <label class="form-check-label" for="gender-input3">我不说</label>
               </div>
             </div>
+            <small
+              *ngIf="signupForm.controls.gender.invalid &&
+              (signupForm.controls.gender.dirty ||
+              signupForm.controls.gender.touched)"
+              id="genderHelp"
+              class="form-text text-muted"
+            >
+              <span class="color-tomato">{{validText('gender', '请选择性别')}}</span>
+            </small>
           </div>
           <div class="form-group">
             <div>

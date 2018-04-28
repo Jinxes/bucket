@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { UserService } from '../../service/user.service';
+import {ApiService} from '../../service/api.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -11,9 +13,13 @@ export class SigninComponent implements OnInit {
 
   public signinForm: FormGroup;
 
+  public _systemError = null;
+
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private apiService: ApiService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -27,9 +33,31 @@ export class SigninComponent implements OnInit {
     });
   }
 
+  private setSystemError(message: String) {
+    this._systemError = message;
+  }
+
   public onSubmit() {
+    this._systemError = false;
     if (this.signinForm.valid) {
-      console.log(this.userService.signin(this.signinForm.value));
+      const response = this.userService.signin(this.signinForm.value);
+      response.subscribe((data) => {
+        if (data.status === this.apiService.SUCCESS) {
+          this.userService.authorization(data.body.token);
+          this.router.navigateByUrl('/');
+        }
+      }, (error) => {
+        const errors = error.error.errors;
+        for (const key of Object.keys(errors)) {
+          if (key !== '_system') {
+            this.signinForm.controls[key].setErrors({
+              async: errors[key][0]
+            });
+          } else {
+            this.setSystemError(errors._system);
+          }
+        }
+      });
     }
   }
 

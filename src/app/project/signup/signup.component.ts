@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, NgForm, ValidatorFn, AbstractControl, FormControl} from '@angular/forms';
 import { UserService } from '../../service/user.service';
-import { AsyncValidatorFn } from '@angular/forms';
-import {ApiService} from '../../service/api.service';
+import { Router } from '@angular/router';
+import {ModalService} from '../../service/modal.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,9 +13,16 @@ export class SignupComponent implements OnInit {
 
   public signupForm: FormGroup;
 
+  static passwordMatchValidator(g: FormGroup) {
+    return g.get('password').value === g.get('passwordRe').value
+      ? null : {'mismatch': true};
+  }
+
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private modalService: ModalService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -39,23 +46,36 @@ export class SignupComponent implements OnInit {
       gender: new FormControl(2, [
         Validators.required
       ])
-    }, this.passwordMatchValidator);
-  }
-
-  public passwordMatchValidator(g: FormGroup) {
-    return g.get('password').value === g.get('passwordRe').value
-      ? null : {'mismatch': true};
+    }, SignupComponent.passwordMatchValidator);
   }
 
   public onSubmit() {
-    if (this.signupForm.invalid) {
-      alert('您输入的信息有错误，请检查');
-      return false;
+    if (this.signupForm.valid) {
+      const response = this.userService.signup(this.signupForm.value);
+      response.subscribe((data) => {
+        this.modalService.alert('注册成功！即将跳转登录页面。');
+        setTimeout(() => {
+          this.modalService.close();
+          this.router.navigateByUrl('/signin');
+        }, 2000);
+      }, (error) => {
+        const errors = error.error.errors;
+        for (const key of Object.keys(errors)) {
+          this.signupForm.controls[key].setErrors({
+            async: errors[key][0]
+          });
+        }
+      });
     }
-    const response = this.userService.signup(this.signupForm.value);
-    response.subscribe((data) => {
-      window.location.href = '/signin';
-    });
+  }
+
+  public validText(key: string, defaultMess: string): string {
+    const errors = this.signupForm.controls[key].errors;
+    if (errors && errors.async) {
+      const asyncMessage = errors.async;
+      return asyncMessage;
+    }
+    return defaultMess;
   }
 
   public emailValidText(): string {
@@ -63,6 +83,10 @@ export class SignupComponent implements OnInit {
       const message = this.signupForm.controls.email.errors.emailTest;
       if (message) {
         return message;
+      }
+      const asyncMessage = this.signupForm.controls.email.errors.async;
+      if (asyncMessage) {
+        return asyncMessage;
       }
     }
     return '邮箱格式有误';

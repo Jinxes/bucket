@@ -16,6 +16,8 @@ import { FooterComponent } from './project/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './project/not-found/not-found.component';
+import { ModalComponent } from './component/modal/modal.component';
+import {ModalService} from './service/modal.service';
 
 export const configureTestingModules = {
   declarations: [
@@ -24,6 +26,7 @@ export const configureTestingModules = {
     HeaderComponent,
     FooterComponent,
     NotFoundComponent,
+    ModalComponent,
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/'},
@@ -32,6 +35,7 @@ export const configureTestingModules = {
     HttpClient,
     CookieService,
     UtilService,
+    ModalService,
   ],
   imports: [
     NgbModule.forRoot(),

@@ -1,0 +1,18 @@
+<div class="modal nomal-modal" [style.display]="modal.display" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{modal.message}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="modal.hide()" class="btn btn-primary">确 认</button>
+      </div>
+    </div>
+  </div>
+</div>

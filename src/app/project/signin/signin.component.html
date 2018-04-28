@@ -57,7 +57,16 @@
             <span class="color-tomato">密码长度为 6 到 16 位半角字符</span>
           </small>
         </div>
-        <button type="submit" class="btn btn-info">登 录</button>
+        <div class="form-group">
+          <button type="submit" class="btn btn-info w-25">登 录</button>
+          <small
+            *ngIf="_systemError"
+            id="systemHelp"
+            class="form-text text-muted"
+          >
+            <span class="color-tomato">{{_systemError}}</span>
+          </small>
+        </div>
       </form>
     </span>
     </div>

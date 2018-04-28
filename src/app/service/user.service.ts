@@ -16,7 +16,7 @@ export class UserService {
 
   public createUrl = '/api/user';
   public emailUrl = '/api/user/email';
-  public signinUrl = '/api/user/user';
+  public signinUrl = '/api/user/token';
   public signoutUrl = '/api/user/signout';
   public signupUrl = '/api/user/';
 
@@ -40,23 +40,24 @@ export class UserService {
   public constructor(
     public http: HttpClient,
     public cookieService: CookieService,
-    public apiService: ApiService,
-    public utilService: UtilService
+    public apiService: ApiService
   ) { }
 
-  public  signup(signupData: SignupStruct): Observable<HttpResponse<any>> {
-    // this.apiService.httpOptions['observe'] = 'response';
+  public signup(signupData: SignupStruct): Observable<HttpResponse<any>> {
     return this.apiService.post(this.signupUrl, signupData);
   }
 
   public signin(signinData: SigninStruct): Observable<HttpResponse<any>> {
-    this.apiService.httpOptions['observe'] = 'response';
     return this.apiService.post(this.signinUrl, signinData);
   }
 
   public matchEmail(email: string): Observable<HttpResponse<any>> {
     this.apiService.httpOptions['observe'] = 'response';
     return this.apiService.get(this.emailUrl + '?email=' + email);
+  }
+
+  public authorization(token: string): void {
+    localStorage.setItem('auth', token);
   }
 
   public signout(): void {
@@ -78,8 +79,11 @@ export class UserService {
   }
 
   public isLogin(): Boolean {
-    const token = this.cookieService.get('token');
-    return !this.utilService.empty(token);
+    const token = localStorage.getItem('auth');
+    if (token !== null) {
+      return true;
+    }
+    return false;
   }
 
 }
