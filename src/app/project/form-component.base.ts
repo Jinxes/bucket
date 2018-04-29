@@ -11,6 +11,10 @@ export abstract class FormComponentBase {
     this._systemError = message;
   }
 
+  protected getSystemError(): string {
+    return this._systemError;
+  }
+
   protected formGroupRegister(formGroup: FormGroup) {
     this._formGroup = formGroup;
   }
