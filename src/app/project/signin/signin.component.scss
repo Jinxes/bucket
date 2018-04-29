@@ -1,15 +1,22 @@
 .content {
-    margin:1rem;
+  margin:1rem;
 
-    .left-bar {
-        .title {
-            height: 2em;
-            line-height: 2em;
-            color: #333;
-        }
-    }
+  .ng-touched.ng-invalid:not(form)  {
+    border-left: 5px solid #EE6A50; /* red */
+  }
+  .ng-valid:not(form)  {
+    border-left: 5px solid #4169E1; /* green */
+  }
 
-    .right-bar {
-        padding: 1rem;
+  .left-bar {
+    .title {
+      height: 2em;
+      line-height: 2em;
+      color: #333;
     }
+  }
+
+  .right-bar {
+    padding: 1rem;
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, NgForm, ValidatorFn, AbstractControl, FormControl} from '@angular/forms';
+import { FormComponentBase } from "../form-component.base";
 import { UserService } from '../../service/user.service';
 import { Router } from '@angular/router';
 import {ModalService} from '../../service/modal.service';
@@ -9,11 +10,9 @@ import {ModalService} from '../../service/modal.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent extends FormComponentBase implements OnInit {
 
   public signupForm: FormGroup;
-
-  public _systemError = null;
 
   static passwordMatchValidator(g: FormGroup) {
     return g.get('password').value === g.get('passwordRe').value
@@ -25,7 +24,9 @@ export class SignupComponent implements OnInit {
     private userService: UserService,
     private modalService: ModalService,
     private router: Router
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.signupForm = new FormGroup({
@@ -49,38 +50,21 @@ export class SignupComponent implements OnInit {
         Validators.required
       ])
     }, SignupComponent.passwordMatchValidator);
-  }
-
-  private setSystemError(message: String) {
-    this._systemError = message;
+    this.formGroupRegister(this.signupForm);
   }
 
   public onSubmit() {
-    if (this.signupForm.valid) {
-      const response = this.userService.signup(this.signupForm.value);
-      response.subscribe((data) => {
-        this.modalService.alert('注册成功！即将跳转登录页面。');
-        setTimeout(() => {
-          this.modalService.close();
-          this.router.navigateByUrl('/signin');
-        }, 2000);
-      }, (error) => {
-        console.log(error);
-        if (error.status === 0) {
-          this.setSystemError('系统繁忙，请稍后再试');
-        } else {
-          const errors = error.error.errors;
-          for (const key of Object.keys(errors)) {
-            if (key !== '_system') {
-              this.signupForm.controls[key].setErrors({
-                async: errors[key][0]
-              });
-            } else {
-              this.setSystemError(errors._system);
-            }
-          }
-        }
-      });
+    if (this.isValid()) {
+      if (this.signupForm.valid) {
+        const response = this.userService.signup(this.signupForm.value);
+        response.subscribe((data) => {
+          this.modalService.alert('注册成功！即将跳转登录页面。');
+          setTimeout(() => {
+            this.modalService.close();
+            this.router.navigateByUrl('/signin');
+          }, 2000);
+        }, this.formInvalidHandle());
+      }
     }
   }
 
@@ -105,6 +89,20 @@ export class SignupComponent implements OnInit {
       }
     }
     return '邮箱格式有误';
+  }
+
+  /**
+   * 判断 passwordRe 与 password 是否相同
+   */
+  public passwordMismatch(): boolean {
+    const control = this.signupForm.controls.passwordRe;
+    const swap = control.dirty || control.touched;
+    if (this.signupForm.errors) {
+      if (swap && this.signupForm.errors.mismatch) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

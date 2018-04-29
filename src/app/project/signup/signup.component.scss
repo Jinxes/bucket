@@ -4,25 +4,11 @@
   .jumbotron {
     background: #EEEEEE;
   }
+
   .ng-touched.ng-invalid:not(form)  {
     border-left: 5px solid #EE6A50; /* red */
   }
   .ng-valid:not(form)  {
-    border-left: 5px solid #42A948; /* green */
-  }
-
-  .step {
-    line-height: 50px;
-    .step-box {
-      width: 50px;
-      height: 50px;
-    }
-    .step-text {
-      padding-left: 1rem;
-    }
-  }
-
-  .hidden {
-    display: none;
+    border-left: 5px solid #4169E1; /* green */
   }
 }
