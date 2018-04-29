@@ -13,6 +13,8 @@ export class SignupComponent implements OnInit {
 
   public signupForm: FormGroup;
 
+  public _systemError = null;
+
   static passwordMatchValidator(g: FormGroup) {
     return g.get('password').value === g.get('passwordRe').value
       ? null : {'mismatch': true};
@@ -49,6 +51,10 @@ export class SignupComponent implements OnInit {
     }, SignupComponent.passwordMatchValidator);
   }
 
+  private setSystemError(message: String) {
+    this._systemError = message;
+  }
+
   public onSubmit() {
     if (this.signupForm.valid) {
       const response = this.userService.signup(this.signupForm.value);
@@ -59,11 +65,20 @@ export class SignupComponent implements OnInit {
           this.router.navigateByUrl('/signin');
         }, 2000);
       }, (error) => {
-        const errors = error.error.errors;
-        for (const key of Object.keys(errors)) {
-          this.signupForm.controls[key].setErrors({
-            async: errors[key][0]
-          });
+        console.log(error);
+        if (error.status === 0) {
+          this.setSystemError('系统繁忙，请稍后再试');
+        } else {
+          const errors = error.error.errors;
+          for (const key of Object.keys(errors)) {
+            if (key !== '_system') {
+              this.signupForm.controls[key].setErrors({
+                async: errors[key][0]
+              });
+            } else {
+              this.setSystemError(errors._system);
+            }
+          }
         }
       });
     }

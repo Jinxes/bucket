@@ -47,14 +47,18 @@ export class SigninComponent implements OnInit {
           this.router.navigateByUrl('/');
         }
       }, (error) => {
-        const errors = error.error.errors;
-        for (const key of Object.keys(errors)) {
-          if (key !== '_system') {
-            this.signinForm.controls[key].setErrors({
-              async: errors[key][0]
-            });
-          } else {
-            this.setSystemError(errors._system);
+        if (error.status === 0) {
+          this.setSystemError('系统繁忙，请稍后再试');
+        } else {
+          const errors = error.error.errors;
+          for (const key of Object.keys(errors)) {
+            if (key !== '_system') {
+              this.signinForm.controls[key].setErrors({
+                async: errors[key][0]
+              });
+            } else {
+              this.setSystemError(errors._system);
+            }
           }
         }
       });
