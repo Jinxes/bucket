@@ -9,16 +9,16 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ng2-cookies';
 import { ApiService } from './api.service';
 import { UtilService } from './util.service';
+import { ModalService } from '../service/modal.service';
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
 
 @Injectable()
 export class UserService {
 
-  public createUrl = '/api/user';
   public emailUrl = '/api/user/email';
   public signinUrl = '/api/user/token';
-  public signoutUrl = '/api/user/signout';
-  public signupUrl = '/api/user/';
+  public signoutUrl = '/api/session';
+  public signupUrl = '/api/user';
 
   public emailTest(): AsyncValidatorFn {
     return (control: AbstractControl) => {
@@ -40,7 +40,9 @@ export class UserService {
   public constructor(
     public http: HttpClient,
     public cookieService: CookieService,
-    public apiService: ApiService
+    public apiService: ApiService,
+    public utilService: UtilService,
+    public modalService: ModalService
   ) { }
 
   public signup(signupData: SignupStruct): Observable<HttpResponse<any>> {
@@ -52,7 +54,6 @@ export class UserService {
   }
 
   public matchEmail(email: string): Observable<HttpResponse<any>> {
-    this.apiService.httpOptions['observe'] = 'response';
     return this.apiService.get(this.emailUrl + '?email=' + email);
   }
 
@@ -60,30 +61,34 @@ export class UserService {
     localStorage.setItem('auth', token);
   }
 
+  public clearAuth(): void {
+    localStorage.clear();
+  }
+
   public signout(): void {
-    this.apiService.httpOptions['observe'] = 'response';
-    this.apiService.get(
+    this.apiService.delete(
       this.signoutUrl
     ).subscribe(data => {
-      if (data.status === this.apiService.SUCCESS) {
-        setTimeout(() => {
-          window.location.reload(true);
-        }, 500);
+      if (data.status === this.apiService.RESET_CONTENT) {
+        this.clearAuth();
+        this.modalService.alert('注销成功！');
       }
     }, (error) => {
-      if (error.status === 422) {
-        alert(error.error.mess);
-      }
-      window.location.reload(true);
+      this.clearAuth();
     });
+    this.clearAuth();
   }
 
   public isLogin(): Boolean {
-    const token = localStorage.getItem('auth');
+    const token = this.utilService.getToken();
     if (token !== null) {
       return true;
     }
     return false;
+  }
+
+  public isNotLogin(): Boolean {
+    return ! this.isLogin();
   }
 
 }

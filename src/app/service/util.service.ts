@@ -9,7 +9,7 @@ export class UtilService {
   ) { }
 
   public getToken(): string {
-    const token = this.cookieService.get('token');
+    const token = localStorage.getItem('auth');
     return token;
   }
 

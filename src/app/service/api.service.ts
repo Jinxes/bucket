@@ -41,67 +41,66 @@ export class ApiService {
   public MIME_CSV = 'text/csv';
   public baseUrl = 'http://localhost:8080';
 
-  public httpOptions = {
-    headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
-      'Content-Type': this.MIME_URL,
-      'Authorization': this.utilService.getToken(),
-    }),
-    reportProgress: true,
-    // withCredentials: true,
-  };
-
   constructor(
     public http: HttpClient,
     public cookieService: CookieService,
     public utilService: UtilService
   ) { }
 
+  public getHttpOptions(): Object {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+        'Content-Type': this.MIME_URL,
+        'Authorization': 'Bearer ' + this.utilService.getToken(),
+      }),
+      reportProgress: true,
+      // withCredentials: true,
+      observe: 'response'
+    };
+    return httpOptions;
+  }
+
   public get(url: string): Observable<HttpResponse<any>> {
-    this.httpOptions['observe'] = 'response';
     return this.http.get<any>(
-      this.baseUrl + url, this.httpOptions
+      this.baseUrl + url, this.getHttpOptions()
     );
   }
 
   public post(url: string, data: object): Observable<HttpResponse<any>> {
-    this.httpOptions['observe'] = 'response';
+    // this.httpOptions['observe'] = 'response';
     const body = new URLSearchParams();
     for (const key of Object.keys(data)) {
       body.set(key, data[key]);
     }
     return this.http.post<any>(
-      this.baseUrl + url, body.toString(), this.httpOptions
+      this.baseUrl + url, body.toString(), this.getHttpOptions()
     );
   }
 
   public put(url: string, data: object): Observable<HttpResponse<any>> {
-    this.httpOptions['observe'] = 'response';
     return this.http.put<any>(
-      this.baseUrl + url, data, this.httpOptions
+      this.baseUrl + url, data, this.getHttpOptions()
     );
   }
 
   public delete(url: string): Observable<HttpResponse<any>> {
-    this.httpOptions['observe'] = 'response';
     return this.http.delete<any>(
-      this.baseUrl + url, this.httpOptions
+      this.baseUrl + url, this.getHttpOptions()
     );
   }
 
   public head(url: string): Observable<HttpResponse<any>> {
-    this.httpOptions['observe'] = 'response';
     return this.http.head<any>(
-      this.baseUrl + url, this.httpOptions
+      this.baseUrl + url, this.getHttpOptions()
     );
   }
 
   public patch(url: string, data: object): Observable<HttpResponse<any>> {
-    this.httpOptions['observe'] = 'response';
     return this.http.patch<any>(
-      this.baseUrl + url, data, this.httpOptions
+      this.baseUrl + url, data, this.getHttpOptions()
     );
   }
 

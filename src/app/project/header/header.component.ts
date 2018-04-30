@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchStruct } from '../../structs/header/search.struct';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,9 @@ export class HeaderComponent implements OnInit {
 
   public submitted = false;
 
-  constructor() { }
+  constructor(
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
   }
