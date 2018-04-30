@@ -20,10 +20,10 @@ export class SignupComponent extends FormComponentBase implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private modalService: ModalService,
-    private router: Router
+    public formBuilder: FormBuilder,
+    public userService: UserService,
+    public modalService: ModalService,
+    public router: Router
   ) {
     super();
   }

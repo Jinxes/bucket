@@ -15,10 +15,10 @@ export class SigninComponent extends FormComponentBase implements OnInit {
   public signinForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private apiService: ApiService,
-    private router: Router
+    public formBuilder: FormBuilder,
+    public userService: UserService,
+    public apiService: ApiService,
+    public router: Router
   ) {
     super();
   }

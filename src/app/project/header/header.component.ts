@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   public submitted = false;
 
   constructor(
-    private userService: UserService
+    public userService: UserService
   ) { }
 
   ngOnInit() {

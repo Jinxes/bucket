@@ -5,7 +5,7 @@ import { CookieService } from 'ng2-cookies';
 export class UtilService {
 
   constructor(
-    private cookieService: CookieService
+    public cookieService: CookieService
   ) { }
 
   public getToken(): string {

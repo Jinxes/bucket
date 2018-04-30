@@ -2,28 +2,28 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 
 export abstract class FormComponentBase {
 
-  protected _systemError = null;
-  protected _formGroup: FormGroup = null;
+  public _systemError = null;
+  public _formGroup: FormGroup = null;
 
   abstract onSubmit();
 
-  protected setSystemError(message: String) {
+  public setSystemError(message: String) {
     this._systemError = message;
   }
 
-  protected getSystemError(): string {
+  public getSystemError(): string {
     return this._systemError;
   }
 
-  protected formGroupRegister(formGroup: FormGroup) {
+  public formGroupRegister(formGroup: FormGroup) {
     this._formGroup = formGroup;
   }
 
-  protected getFormGroup(): FormGroup {
+  public getFormGroup(): FormGroup {
     return this._formGroup;
   }
 
-  protected formInvalidHandle() {
+  public formInvalidHandle() {
     const that = this;
     return (error) => {
       if (error.status === 0) {
@@ -44,13 +44,13 @@ export abstract class FormComponentBase {
     };
   }
 
-  protected fieldInvalid(field: string): boolean {
+  public fieldInvalid(field: string): boolean {
     const formGroup = this.getFormGroup();
     const control = formGroup.controls[field];
     return control.invalid && (control.dirty || control.touched);
   }
 
-  protected isValid() {
+  public isValid() {
     this._systemError = null;
     const formGroup = this.getFormGroup();
     return formGroup.valid;
