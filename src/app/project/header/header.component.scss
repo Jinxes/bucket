@@ -5,13 +5,23 @@
         color: rgb(99, 134, 230);
     }
 
+    .dropdown-item {
+      color: #333;
+      font-size: .9rem;
+    }
+
     .dropdown-item:hover {
-        background: rgb(46, 92, 216);
-        color: #fff;
+        background: #B0C4DE;
+        // color: #fff;
+    }
+
+    .menu-icon {
+      width: 25px;
+      height: 25px;
     }
 
     .avatar-image {
-      width: 30px;
-      height: 30px;
+      @extend .menu-icon;
+      background: #FFF;
     }
 }

@@ -17,6 +17,8 @@ import { NotFoundComponent } from './project/not-found/not-found.component';
 import { SignupComponent } from './project/signup/signup.component';
 import { ModalComponent } from './component/modal/modal.component';
 import { ModalService } from './service/modal.service';
+import { PersonalComponent } from './project/personal/personal.component';
+import { BlogComponent } from './project/personal/blog/blog.component';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { ModalService } from './service/modal.service';
     NotFoundComponent,
     SignupComponent,
     ModalComponent,
+    PersonalComponent,
+    BlogComponent,
   ],
   imports: [
     NgbModule.forRoot(),

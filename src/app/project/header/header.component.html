@@ -40,7 +40,7 @@
       <li class="nav-item dropdown"><!-- dropdown -| dropdown-toggle -->
         <a class="nav-link" href="javascript:void(0);" id="HeadernavbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img
-            src="https://www.easyicon.net/api/resizeApi.php?id=1163663&size=48"
+            src="/assets/image/system/user.svg"
             class="rounded-circle avatar-image"
           />
         </a>
@@ -50,22 +50,46 @@
         >
           <!-- 登录后的选项 -->
           <span *ngIf="userService.isLogin()">
-            <a class="dropdown-item" routerLink="/personal">个人主页</a>
+            <a class="dropdown-item" routerLink="/personal">
+              <img
+              src="/assets/image/system/home.svg"
+              class="menu-icon pr-1"
+              />个人主页
+            </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" routerLink="/setting">设置</a>
+            <a class="dropdown-item" routerLink="/setting">
+              <img
+              src="/assets/image/system/setting.svg"
+              class="menu-icon pr-1"
+              />设置
+            </a>
             <div class="dropdown-divider"></div>
             <a
               class="dropdown-item"
               href="javascript:void(0)"
               (click)="userService.signout()">
+              <img
+              src="/assets/image/system/signout.svg"
+              class="menu-icon pr-1"
+              />
               登出
             </a>
           </span>
           <!-- 未登录选项 -->
           <span *ngIf="userService.isNotLogin()">
-            <a class="dropdown-item" routerLink="/signin">登录</a>
+            <a class="dropdown-item" routerLink="/signin">
+              <img
+              src="/assets/image/system/login.svg"
+              class="menu-icon pr-1"
+              />登录账户
+            </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" routerLink="/signup">注册</a>
+            <a class="dropdown-item" routerLink="/signup">
+              <img
+              src="/assets/image/system/add.svg"
+              class="menu-icon pr-1"
+              />入住小站
+            </a>
           </span>
         </div>
       </li>
