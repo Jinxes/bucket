@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalComponent implements OnInit {
 
+  public viewer: String = 'talk';
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public tab(viewer: string) {
+    this.viewer = viewer;
   }
 
 }

@@ -19,6 +19,9 @@ import { ModalComponent } from './component/modal/modal.component';
 import { ModalService } from './service/modal.service';
 import { PersonalComponent } from './project/personal/personal.component';
 import { BlogComponent } from './project/personal/blog/blog.component';
+import { TalkComponent } from './project/personal/talk/talk.component';
+import { ProfileComponent } from './project/personal/profile/profile.component';
+import { VisitorComponent } from './project/personal/visitor/visitor.component';
 
 
 @NgModule({
@@ -32,6 +35,9 @@ import { BlogComponent } from './project/personal/blog/blog.component';
     ModalComponent,
     PersonalComponent,
     BlogComponent,
+    TalkComponent,
+    ProfileComponent,
+    VisitorComponent,
   ],
   imports: [
     NgbModule.forRoot(),

@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 export abstract class FormComponentBase {
 

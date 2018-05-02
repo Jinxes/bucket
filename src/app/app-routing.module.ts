@@ -11,10 +11,7 @@ import { BlogComponent } from './project/personal/blog/blog.component';
 const routes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'personal', children: [
-    { path: 'blog', component: BlogComponent, outlet: 'blog' },
-    { path: '', component: PersonalComponent }
-  ] },
+  { path: 'personal', component: PersonalComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

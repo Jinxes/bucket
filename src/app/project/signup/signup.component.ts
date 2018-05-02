@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, NgForm, ValidatorFn, AbstractControl, FormControl} from '@angular/forms';
-import { FormComponentBase } from "../form-component.base";
+import { FormComponentBase } from '../form-component.base';
 import { UserService } from '../../service/user.service';
 import { Router } from '@angular/router';
 import {ModalService} from '../../service/modal.service';
@@ -77,6 +77,9 @@ export class SignupComponent extends FormComponentBase implements OnInit {
     return defaultMess;
   }
 
+  /**
+   * email 错误信息
+   */
   public emailValidText(): string {
     if (this.signupForm.controls.email.errors) {
       const message = this.signupForm.controls.email.errors.emailTest;
