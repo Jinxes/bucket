@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal',
@@ -9,9 +11,15 @@ export class PersonalComponent implements OnInit {
 
   public viewer: String = 'talk';
 
-  constructor() { }
+  constructor(
+    public userService: UserService,
+    public router: Router
+  ) { }
 
   ngOnInit() {
+    if (this.userService.isNotLogin()) {
+      this.router.navigateByUrl('/signin');
+    }
   }
 
   public tab(viewer: string) {

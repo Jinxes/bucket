@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchStruct } from '../../structs/header/search.struct';
 import { UserService } from '../../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,10 +15,17 @@ export class HeaderComponent implements OnInit {
   public submitted = false;
 
   constructor(
-    public userService: UserService
+    public userService: UserService,
+    public router: Router
   ) { }
 
   ngOnInit() {
+  }
+
+  public signout() {
+    this.userService.signout((data) => {
+      this.router.navigateByUrl('/signin');
+    });
   }
 
   public onSubmit() {

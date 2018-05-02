@@ -65,13 +65,14 @@ export class UserService {
     localStorage.clear();
   }
 
-  public signout(): void {
+  public signout(callback: Function): void {
     this.apiService.delete(
       this.signoutUrl
     ).subscribe(data => {
       if (data.status === this.apiService.RESET_CONTENT) {
         this.clearAuth();
         this.modalService.alert('注销成功！');
+        callback(data);
       }
     }, (error) => {
       this.clearAuth();
