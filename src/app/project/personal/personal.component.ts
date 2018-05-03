@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class PersonalComponent implements OnInit {
 
-  public viewer: String = 'talk';
+  public viewer: String = 'profile';
 
   constructor(
     public userService: UserService,

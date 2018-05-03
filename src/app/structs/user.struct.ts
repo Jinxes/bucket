@@ -14,3 +14,13 @@ export interface SignupStruct {
   gender: number;
   // captcha: string;
 }
+
+export interface UserData {
+  nickname: string;
+  email: string;
+  sign: string;
+  address: string;
+  birthday: {year: Number, month: Number, day: Number};
+  gender: number;
+  intro: string;
+}
