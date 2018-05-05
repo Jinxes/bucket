@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../service/user.service';
 import { Router } from '@angular/router';
+import { ModalService } from '../../service/modal.service';
 
 @Component({
   selector: 'app-personal',
@@ -13,6 +14,7 @@ export class PersonalComponent implements OnInit {
 
   constructor(
     public userService: UserService,
+    public modalService: ModalService,
     public router: Router
   ) { }
 
@@ -24,6 +26,10 @@ export class PersonalComponent implements OnInit {
 
   public tab(viewer: string) {
     this.viewer = viewer;
+  }
+
+  public showUserCard() {
+    this.modalService.alert('sunc');
   }
 
 }

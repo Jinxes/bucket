@@ -2,6 +2,7 @@
 <div class="row">
   <div class="col-md-10">
     <h5>我的个人资料</h5>
+    <hr class="my-4">
     <form class="col-md-12" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
       <div class="form-group row">
@@ -62,7 +63,7 @@
             id="genderHelp"
             class="form-text text-muted"
           >
-            <span class="color-tomato">邮箱格式错误</span>
+            <span class="color-tomato">{{ emailValidText() }}</span>
           </small>
         </div>
       </div>

@@ -20,7 +20,7 @@ export interface UserData {
   email: string;
   sign: string;
   address: string;
-  birthday: {year: Number, month: Number, day: Number};
+  birthday: any;
   gender: number;
   intro: string;
 }

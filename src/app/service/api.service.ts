@@ -39,7 +39,7 @@ export class ApiService {
   public MIME_PDF = 'application/pdf';
   public MIME_EXCEL = 'application/vnd.ms-excel';
   public MIME_CSV = 'text/csv';
-  public baseUrl = 'http://localhost:8080';
+  public baseUrl = 'http://localhost:4200';
 
   constructor(
     public http: HttpClient,
@@ -47,58 +47,68 @@ export class ApiService {
     public utilService: UtilService
   ) { }
 
-  public getHttpOptions(): Object {
+  public getHttpOptions(): {headers: HttpHeaders} {
     const httpOptions = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
-        'Content-Type': this.MIME_URL,
+        'Content-Type': this.MIME_JSON,
         'Authorization': 'Bearer ' + this.utilService.getToken(),
       }),
       reportProgress: true,
-      // withCredentials: true,
+      withCredentials: true,
       observe: 'response'
     };
     return httpOptions;
   }
 
   public get(url: string): Observable<HttpResponse<any>> {
+    const httpOptions = this.getHttpOptions();
+    httpOptions.headers['Content-Type'] = this.MIME_URL;
     return this.http.get<any>(
-      this.baseUrl + url, this.getHttpOptions()
+      this.baseUrl + url, httpOptions
     );
   }
 
   public post(url: string, data: object): Observable<HttpResponse<any>> {
     // this.httpOptions['observe'] = 'response';
-    const body = new URLSearchParams();
-    for (const key of Object.keys(data)) {
-      body.set(key, data[key]);
-    }
+    // const body = new URLSearchParams();
+    // for (const key of Object.keys(data)) {
+    //   body.set(key, data[key]);
+    // }
+    const body = JSON.stringify(data);
     return this.http.post<any>(
-      this.baseUrl + url, body.toString(), this.getHttpOptions()
+      this.baseUrl + url, body, this.getHttpOptions()
     );
   }
 
   public put(url: string, data: object): Observable<HttpResponse<any>> {
+    const body = JSON.stringify(data);
     return this.http.put<any>(
-      this.baseUrl + url, data, this.getHttpOptions()
+      this.baseUrl + url, body, this.getHttpOptions()
     );
   }
 
   public delete(url: string): Observable<HttpResponse<any>> {
+    const httpOptions = this.getHttpOptions();
+    httpOptions.headers['Content-Type'] = this.MIME_URL;
     return this.http.delete<any>(
       this.baseUrl + url, this.getHttpOptions()
     );
   }
 
   public head(url: string): Observable<HttpResponse<any>> {
+    const httpOptions = this.getHttpOptions();
+    httpOptions.headers['Content-Type'] = this.MIME_URL;
     return this.http.head<any>(
       this.baseUrl + url, this.getHttpOptions()
     );
   }
 
   public patch(url: string, data: object): Observable<HttpResponse<any>> {
+    const httpOptions = this.getHttpOptions();
+    httpOptions.headers['Content-Type'] = this.MIME_URL;
     return this.http.patch<any>(
       this.baseUrl + url, data, this.getHttpOptions()
     );

@@ -11,3 +11,14 @@
 
 .refined-color {background:#EEE;}
 .radius {border-radius:50%;}
+
+
+.multi-ellips {
+    word-wrap:break-word;
+    text-overflow: -o-ellipsis-lastline;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}

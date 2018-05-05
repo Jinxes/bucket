@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators, NgForm, ValidatorFn, AbstractControl
 import { FormComponentBase } from '../../form-component.base';
 import { UserService } from '../../../service/user.service';
 import { UserData } from '../../../structs/user.struct';
+import { ModalService } from '../../../service/modal.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,32 +15,22 @@ export class ProfileComponent extends FormComponentBase implements OnInit {
   public profileForm: FormGroup;
 
   constructor(
-    public userService: UserService
+    public userService: UserService,
+    public modalService: ModalService
   ) {
     super();
   }
 
   ngOnInit() {
-    const data: UserData = {
-      nickname: 'asd',
-      email: 'asd@as.ad',
-      sign: 'asdasd',
-      address: 'dadasdad',
-      birthday: {
-        year: 2018,
-        month: 3,
-        day: 4
-      },
-      gender: 1,
-      intro: 'dasdaddasdasdasdsa'
-    };
-    this.formBuild(data);
-    setTimeout(() => {
-      this.profileForm.setValue(data);
-    }, 1500);
+    this.formBuild();
+    const response = this.userService.userData();
+    response.subscribe((resp) => {
+      console.log(resp);
+      this.profileForm.setValue(resp.body);
+    });
   }
 
-  public formBuild(data: UserData) {
+  public formBuild() {
     this.profileForm = new FormGroup({
       nickname: new FormControl(null, [
         Validators.required,
@@ -49,7 +40,7 @@ export class ProfileComponent extends FormComponentBase implements OnInit {
         Validators.required,
         Validators.minLength(4),
         Validators.email
-      ]),
+      ], this.userService.emailRepTest()),
       sign: new FormControl(null, [
         Validators.maxLength(32)
       ]),
@@ -80,6 +71,35 @@ export class ProfileComponent extends FormComponentBase implements OnInit {
 
   onSubmit() {
     console.log(this.profileForm.value);
+    const data = this.profileForm.value;
+    data.birthday = data.birthday.year + '-' + data.birthday.month + '-' + data.birthday.day;
+    const response = this.userService.updateData(data);
+    response.subscribe((resp) => {
+      console.log(resp);
+      if (resp.status === 200) {
+        this.modalService.alert('保存成功！');
+        setTimeout(() => {
+          this.modalService.close();
+        }, 1000);
+      }
+    }, this.formInvalidHandle());
+  }
+
+  /**
+   * email 错误信息
+   */
+  public emailValidText(): string {
+    if (this.profileForm.controls.email.errors) {
+      const message = this.profileForm.controls.email.errors.emailRepTest;
+      if (message) {
+        return message;
+      }
+      const asyncMessage = this.profileForm.controls.email.errors.async;
+      if (asyncMessage) {
+        return asyncMessage;
+      }
+    }
+    return '邮箱格式有误';
   }
 
 }

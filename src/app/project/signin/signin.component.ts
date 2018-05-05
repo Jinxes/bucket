@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
-import { FormComponentBase } from "../form-component.base";
+import { FormComponentBase } from '../form-component.base';
 import { UserService } from '../../service/user.service';
 import {ApiService} from '../../service/api.service';
 import {Router} from '@angular/router';
@@ -40,7 +40,7 @@ export class SigninComponent extends FormComponentBase implements OnInit {
       const response = this.userService.signin(this.signinForm.value);
       response.subscribe((data) => {
         if (data.status === this.apiService.SUCCESS) {
-          this.userService.authorization(data.body.token);
+          this.userService.authorization(data.body.access_token);
           this.router.navigateByUrl('/');
         }
       }, this.formInvalidHandle());

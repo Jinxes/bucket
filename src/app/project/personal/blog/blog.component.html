@@ -1,3 +1,45 @@
-<p>
-  blog works!
-</p>
+<div class="container">
+
+  <div class="row">
+    <h4 class="col-md-12">
+      我的博客
+      <div class="float-right">
+        <a class="btn btn-outline-success" href="#">新博客</a>
+      </div>
+    </h4>
+  </div>
+  <hr class="my-2">
+
+  <div class="row">
+
+    <div class="col-md-12">
+    <div *ngFor="let blog of blogs" class="card mt-1">
+      <div class="row py-2">
+        <div class="col-md-3">
+          <img class="img-thumbnail" src="/assets/image/system/user.svg" />
+        </div>
+        <div class="card-body col-md-9">
+          <div class="row blog-body">
+            <div class="col-md-12">
+              <h5 class="card-title text-truncate">
+                <a class="card-link" href="#">{{blog.title}}</a>
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{blog.subtitle}}</h6>
+              <p class="card-text multi-ellips">
+               {{blog.intro}}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button class="btn btn-sm btn-outline-primary">编辑</button>
+              <button class="btn btn-sm btn-outline-dark">删除</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  </div>
+</div>
