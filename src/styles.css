@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('bootstrap/dist/css/bootstrap.css');
+@import url('prismjs/themes/prism.css');
+@import url('prismjs/themes/prism-solarizedlight.css');
 
 .pointer {cursor: pointer;}
 
@@ -19,6 +21,5 @@
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }

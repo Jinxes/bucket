@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-header">
+    <a href="javascript:void(0)" (click)="preview = false" [class.active]="! preview" class="card-link">编辑</a>
+    <a href="javascript:void(0)" (click)="preview = true" [class.active]="preview" class="card-link">预览</a>
+  </div>
+  <textarea
+    *ngIf="! preview"
+    class="form-control card-body"
+    formControlName="content"
+    class="form-control"
+    id="content"
+    name="content"
+    rows="10"
+  ></textarea>
+  <markdown *ngIf="preview" class="form-control card-body" [data]="blogForm.value.content"></markdown>
+</div>

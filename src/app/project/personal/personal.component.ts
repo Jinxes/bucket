@@ -10,7 +10,7 @@ import { ModalService } from '../../service/modal.service';
 })
 export class PersonalComponent implements OnInit {
 
-  public viewer: String = 'profile';
+  public viewer: String = 'blog';
 
   constructor(
     public userService: UserService,

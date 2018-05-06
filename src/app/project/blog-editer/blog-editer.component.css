@@ -1,0 +1,9 @@
+.card-link {
+    color: #555;
+}
+.card-link.active {
+    color: #4169E1;
+}
+.textarea {
+    color: #444;
+}

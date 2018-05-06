@@ -9,6 +9,7 @@ import { HeaderComponent } from './project/header/header.component';
 import { SigninComponent } from './project/signin/signin.component';
 import { FooterComponent } from './project/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MarkdownModule } from 'angular2-markdown';
 import { UserService } from './service/user.service';
 import { CookieService } from 'ng2-cookies';
 import { ApiService } from './service/api.service';
@@ -22,6 +23,9 @@ import { BlogComponent } from './project/personal/blog/blog.component';
 import { TalkComponent } from './project/personal/talk/talk.component';
 import { ProfileComponent } from './project/personal/profile/profile.component';
 import { VisitorComponent } from './project/personal/visitor/visitor.component';
+import { BlogboxComponent } from './component/blogbox/blogbox.component';
+import { BlogEditerComponent } from './project/blog-editer/blog-editer.component';
+import { MarkdownEditorComponent } from './component/markdown-editor/markdown-editor.component';
 
 
 @NgModule({
@@ -38,6 +42,9 @@ import { VisitorComponent } from './project/personal/visitor/visitor.component';
     TalkComponent,
     ProfileComponent,
     VisitorComponent,
+    BlogboxComponent,
+    BlogEditerComponent,
+    MarkdownEditorComponent,
   ],
   imports: [
     NgbModule.forRoot(),
@@ -45,7 +52,8 @@ import { VisitorComponent } from './project/personal/visitor/visitor.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MarkdownModule.forRoot()
   ],
   providers: [
     UserService,

@@ -1,0 +1,41 @@
+<div class="border-bottom container py-2">
+  <div class="row">
+    <div class="col-md-12 blogbox-header">
+      <img src="/assets/image/system/user.svg" class="avatar-sm" />
+      <a class="card-link avatar-link" href="#">作者</a>
+      <span class="sign">慢走路，多喝水。</span>
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="col-md-12">
+      <a href="#" class="blog-title card-link">{{ blog.title }}</a>
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="col-sm-12 d-sm-flex flex-sm-row">
+      <div>
+        <img class="blogbox-logo" src="/assets/image/system/signout.svg" />
+      </div>
+      <div class="blogbox-right pl-3">
+        <div class="multi-ellips blogbox-intro">
+          {{ blog.intro }}
+          <a href="#" class="card-link">详情</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row py-2">
+    <div class="col-md-12">
+      <span class="badge badge-pill badge-danger">本周热门</span>
+      <span class="badge badge-pill badge-primary">5阅读</span>
+      <span class="badge badge-pill badge-info">5喜欢</span>
+      <span class="badge badge-pill badge-info">15评论</span>
+
+      <div class="float-right">
+        <button class="btn btn-sm btn-outline-primary">编辑</button>
+        <button class="btn btn-sm btn-outline-dark">删除</button>
+      </div>
+    </div>
+  </div>
+</div>
