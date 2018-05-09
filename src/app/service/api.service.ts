@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { catchError, map, tap } from 'rxjs/operators';
 import { CookieService } from 'ng2-cookies';
 import { UtilService } from './util.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ApiService {
@@ -44,7 +47,8 @@ export class ApiService {
   constructor(
     public http: HttpClient,
     public cookieService: CookieService,
-    public utilService: UtilService
+    public utilService: UtilService,
+    public router: Router
   ) { }
 
   public getHttpOptions(): {headers: HttpHeaders} {
@@ -63,12 +67,21 @@ export class ApiService {
     return httpOptions;
   }
 
+  public handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      if (error.status === this.UNAUTHORIZED) {
+        this.router.navigateByUrl('/signin');
+      }
+      return of(result as T);
+    };
+  }
+
   public get(url: string): Observable<HttpResponse<any>> {
     const httpOptions = this.getHttpOptions();
     httpOptions.headers['Content-Type'] = this.MIME_URL;
     return this.http.get<any>(
       this.baseUrl + url, httpOptions
-    );
+    ).pipe(catchError(this.handleError(undefined, [])));
   }
 
   public post(url: string, data: object): Observable<HttpResponse<any>> {
@@ -80,14 +93,14 @@ export class ApiService {
     const body = JSON.stringify(data);
     return this.http.post<any>(
       this.baseUrl + url, body, this.getHttpOptions()
-    );
+    ).pipe(catchError(this.handleError(undefined, [])));
   }
 
   public put(url: string, data: object): Observable<HttpResponse<any>> {
     const body = JSON.stringify(data);
     return this.http.put<any>(
       this.baseUrl + url, body, this.getHttpOptions()
-    );
+    ).pipe(catchError(this.handleError(undefined, [])));
   }
 
   public delete(url: string): Observable<HttpResponse<any>> {
@@ -95,7 +108,7 @@ export class ApiService {
     httpOptions.headers['Content-Type'] = this.MIME_URL;
     return this.http.delete<any>(
       this.baseUrl + url, this.getHttpOptions()
-    );
+    ).pipe(catchError(this.handleError(undefined, [])));
   }
 
   public head(url: string): Observable<HttpResponse<any>> {
@@ -103,7 +116,7 @@ export class ApiService {
     httpOptions.headers['Content-Type'] = this.MIME_URL;
     return this.http.head<any>(
       this.baseUrl + url, this.getHttpOptions()
-    );
+    ).pipe(catchError(this.handleError(undefined, [])));
   }
 
   public patch(url: string, data: object): Observable<HttpResponse<any>> {
@@ -111,7 +124,7 @@ export class ApiService {
     httpOptions.headers['Content-Type'] = this.MIME_URL;
     return this.http.patch<any>(
       this.baseUrl + url, data, this.getHttpOptions()
-    );
+    ).pipe(catchError(this.handleError(undefined, [])));
   }
 
 }

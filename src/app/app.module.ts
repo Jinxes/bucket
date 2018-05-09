@@ -10,6 +10,7 @@ import { SigninComponent } from './project/signin/signin.component';
 import { FooterComponent } from './project/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MarkdownModule } from 'angular2-markdown';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import { UserService } from './service/user.service';
 import { CookieService } from 'ng2-cookies';
 import { ApiService } from './service/api.service';
@@ -53,7 +54,8 @@ import { MarkdownEditorComponent } from './component/markdown-editor/markdown-ed
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    Angular2FontawesomeModule
   ],
   providers: [
     UserService,
