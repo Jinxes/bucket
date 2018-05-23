@@ -9,14 +9,14 @@ export interface SigninStruct {
 
 export interface SignupStruct {
   email: string;
-  nickname: string;
+  username: string;
   password: string;
   gender: number;
   // captcha: string;
 }
 
 export interface UserData {
-  nickname: string;
+  username: string;
   email: string;
   sign: string;
   address: string;

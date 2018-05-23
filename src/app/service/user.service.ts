@@ -16,13 +16,12 @@ import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
 export class UserService {
 
   public emailUrl = '/api/user/email';
-  public signinUrl = '/api/user/token';
+  public signinUrl = '/auth';
   public signoutUrl = '/api/session';
   public signupUrl = '/api/user';
-  public userDataUrl = '/api/user/data';
-  public updateUrl = '/api/user/data';
+  public userDataUrl = '/user';
+  public updateUrl = '/user';
   public repEmailUrl = '/api/user/rep-email';
-
   public blogListUrl = '/api/blog';
 
   public emailTest(): AsyncValidatorFn {
@@ -72,7 +71,7 @@ export class UserService {
   }
 
   public signin(signinData: SigninStruct): Observable<HttpResponse<any>> {
-    return this.apiService.post(this.signinUrl, signinData);
+    return this.apiService.get(this.signinUrl, signinData);
   }
 
   public userData(): Observable<HttpResponse<UserData>> {

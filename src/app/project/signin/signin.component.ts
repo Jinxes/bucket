@@ -40,7 +40,7 @@ export class SigninComponent extends FormComponentBase implements OnInit {
       const response = this.userService.signin(this.signinForm.value);
       response.subscribe((data) => {
         if (data.status === this.apiService.SUCCESS) {
-          this.userService.authorization(data.body.access_token);
+          this.userService.authorization(data.body.token);
           this.router.navigateByUrl('/');
         }
       }, this.formInvalidHandle());

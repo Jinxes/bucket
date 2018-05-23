@@ -62,21 +62,21 @@
           </div>
 
           <div class="form-group">
-            <label for="signup-nickname" class="pointer">你的昵称（<small>昵称对所有用户可见</small>）</label>
+            <label for="signup-username" class="pointer">你的昵称（<small>昵称对所有用户可见</small>）</label>
             <input
               type="text"
               class="form-control"
-              formControlName="nickname"
-              id="signup-nickname"
-              name="nickname"
+              formControlName="username"
+              id="signup-username"
+              name="username"
               placeholder="昵称"
             />
             <small
-              *ngIf="fieldInvalid('nickname')"
-              id="nicknameHelp"
+              *ngIf="fieldInvalid('username')"
+              id="usernameHelp"
               class="form-text text-muted"
             >
-              <span class="color-tomato">{{validText('nickname', '昵称不能为空')}}</span>
+              <span class="color-tomato">{{validText('username', '昵称不能为空')}}</span>
             </small>
           </div>
           <div class="form-group">

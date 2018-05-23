@@ -26,13 +26,21 @@ export class ProfileComponent extends FormComponentBase implements OnInit {
     const response = this.userService.userData();
     response.subscribe((resp) => {
       console.log(resp);
+      const { birthday } = resp.body;
+      const birthObject = birthday.split('-');
+      resp.body.birthday = {
+        year: parseInt(birthObject[0], 10),
+        month: parseInt(birthObject[1], 10),
+        day: parseInt(birthObject[2], 10)
+      };
+      console.log(resp);
       this.profileForm.setValue(resp.body);
     });
   }
 
   public formBuild() {
     this.profileForm = new FormGroup({
-      nickname: new FormControl(null, [
+      username: new FormControl(null, [
         Validators.required,
         Validators.maxLength(20)
       ]),

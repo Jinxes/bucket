@@ -6,18 +6,18 @@
     <form class="col-md-12" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
       <div class="form-group row">
-        <label for="nickname" class="col-md-2 col-form-label">昵称</label>
+        <label for="username" class="col-md-2 col-form-label">昵称</label>
         <div class="col-md-10">
           <input
             type="text"
             class="form-control"
-            id="nickname"
-            name="nickname"
-            formControlName="nickname"
+            id="username"
+            name="username"
+            formControlName="username"
             placeholder="昵称"
           />
           <small
-            *ngIf="fieldInvalid('nickname')"
+            *ngIf="fieldInvalid('username')"
             id="genderHelp"
             class="form-text text-muted"
           >

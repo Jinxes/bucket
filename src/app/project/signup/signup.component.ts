@@ -35,7 +35,7 @@ export class SignupComponent extends FormComponentBase implements OnInit {
         Validators.minLength(4),
         Validators.email
       ], this.userService.emailTest()),
-      nickname: new FormControl('', Validators.required),
+      username: new FormControl('', Validators.required),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
