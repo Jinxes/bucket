@@ -11,6 +11,7 @@ import { ApiService } from './api.service';
 import { UtilService } from './util.service';
 import { ModalService } from '../service/modal.service';
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -71,7 +72,13 @@ export class UserService {
   }
 
   public signin(signinData: SigninStruct): Observable<HttpResponse<any>> {
-    return this.apiService.get(this.signinUrl, signinData);
+    return this.apiService.get(this.signinUrl, signinData)
+      .pipe(tap((response) => {
+        if (response.status === this.apiService.SUCCESS) {
+          const token = response.body.token;
+          this.apiService.authorization(token);
+        }
+      }));
   }
 
   public userData(): Observable<HttpResponse<UserData>> {
@@ -90,27 +97,14 @@ export class UserService {
     return this.apiService.get(this.repEmailUrl + '?email=' + email);
   }
 
-  public authorization(token: string): void {
-    localStorage.setItem('auth', token);
-  }
-
   public clearAuth(): void {
     localStorage.clear();
   }
 
   public signout(callback: Function): void {
-    this.apiService.delete(
-      this.signoutUrl
-    ).subscribe(data => {
-      if (data.status === this.apiService.RESET_CONTENT) {
-        this.clearAuth();
-        this.modalService.alert('注销成功！');
-        callback(data);
-      }
-    }, (error) => {
-      this.clearAuth();
-    });
     this.clearAuth();
+    this.modalService.alert('注销成功！');
+    return callback();
   }
 
   public isLogin(): Boolean {

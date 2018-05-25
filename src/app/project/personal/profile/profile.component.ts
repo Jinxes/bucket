@@ -25,16 +25,17 @@ export class ProfileComponent extends FormComponentBase implements OnInit {
     this.formBuild();
     const response = this.userService.userData();
     response.subscribe((resp) => {
-      console.log(resp);
       const { birthday } = resp.body;
+      console.log(resp.body);
       const birthObject = birthday.split('-');
       resp.body.birthday = {
         year: parseInt(birthObject[0], 10),
         month: parseInt(birthObject[1], 10),
         day: parseInt(birthObject[2], 10)
       };
-      console.log(resp);
       this.profileForm.setValue(resp.body);
+    }, error => {
+      console.log(error);
     });
   }
 

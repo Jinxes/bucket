@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public signout() {
-    this.userService.signout((data) => {
+    this.userService.signout(() => {
       this.router.navigateByUrl('/signin');
     });
   }

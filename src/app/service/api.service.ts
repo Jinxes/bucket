@@ -68,6 +68,13 @@ export class ApiService {
     return httpOptions;
   }
 
+  public handleTap(response) {
+    const token = response.headers.get('authorization');
+    if (token) {
+      this.authorization(token);
+    }
+  }
+
   public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === this.UNAUTHORIZED) {
@@ -77,54 +84,74 @@ export class ApiService {
     };
   }
 
-  public get(url: string, data: object = {}): Observable<HttpResponse<any>> {
-    const httpOptions = this.getHttpOptions();
-    httpOptions.headers['Content-Type'] = this.MIME_URL;
+  public pipeWorker(observer: Observable<any>): Observable<any> {
+    return observer.pipe(
+      tap(this.handleTap.bind(this)),
+      catchError(this.handleError(undefined, []))
+    );
+  }
+
+  private makeUrlfix(data: object = {}): string {
     const body = new URLSearchParams();
     for (const key of Object.keys(data)) {
       body.set(key, data[key]);
     }
-    return this.http.get<any>(
-      this.baseUrl + url + '?' + body, httpOptions
-    ).pipe(catchError(this.handleError(undefined, [])));
+    return data === {} ? '?' + body : '';
   }
 
-  public post(url: string, data: object): Observable<HttpResponse<any>> {
+  public get(url: string, data: object = {}): Observable<HttpResponse<any>> {
+    const httpOptions = this.getHttpOptions();
+    httpOptions.headers['Content-Type'] = this.MIME_URL;
+    const fixedUrl = this.makeUrlfix(data);
+    return this.pipeWorker(
+      this.http.get<any>(
+        this.baseUrl + url + fixedUrl, httpOptions
+      )
+    );
+  }
+
+  public post(url: string, data: object = {}): Observable<HttpResponse<any>> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(
-      this.baseUrl + url, body, this.getHttpOptions()
-    ).pipe(catchError(this.handleError(undefined, [])));
+    return this.pipeWorker(
+      this.http.post<any>(
+        this.baseUrl + url, body, this.getHttpOptions()
+      )
+    );
   }
 
   public put(url: string, data: object): Observable<HttpResponse<any>> {
     const body = JSON.stringify(data);
-    return this.http.put<any>(
-      this.baseUrl + url, body, this.getHttpOptions()
-    ).pipe(catchError(this.handleError(undefined, [])));
+    return this.pipeWorker(
+      this.http.put<any>(
+        this.baseUrl + url, body, this.getHttpOptions()
+      )
+    );
   }
 
-  public delete(url: string): Observable<HttpResponse<any>> {
+  public delete(url: string, data: object = {}): Observable<HttpResponse<any>> {
     const httpOptions = this.getHttpOptions();
     httpOptions.headers['Content-Type'] = this.MIME_URL;
-    return this.http.delete<any>(
-      this.baseUrl + url, this.getHttpOptions()
-    ).pipe(catchError(this.handleError(undefined, [])));
+    const fixedUrl = this.makeUrlfix(data);
+    return this.pipeWorker(
+      this.http.delete<any>(
+        this.baseUrl + url + fixedUrl, httpOptions
+      )
+    );
   }
 
-  public head(url: string): Observable<HttpResponse<any>> {
+  public head(url: string, data: object = {}): Observable<HttpResponse<any>> {
     const httpOptions = this.getHttpOptions();
     httpOptions.headers['Content-Type'] = this.MIME_URL;
-    return this.http.head<any>(
-      this.baseUrl + url, this.getHttpOptions()
-    ).pipe(catchError(this.handleError(undefined, [])));
+    const fixedUrl = this.makeUrlfix(data);
+    return this.pipeWorker(
+      this.http.head<any>(
+        this.baseUrl + url + fixedUrl, httpOptions
+      )
+    );
   }
 
-  public patch(url: string, data: object): Observable<HttpResponse<any>> {
-    const httpOptions = this.getHttpOptions();
-    httpOptions.headers['Content-Type'] = this.MIME_URL;
-    return this.http.patch<any>(
-      this.baseUrl + url, data, this.getHttpOptions()
-    ).pipe(catchError(this.handleError(undefined, [])));
+  public authorization(token: string): void {
+    localStorage.setItem('auth', token);
   }
 
 }

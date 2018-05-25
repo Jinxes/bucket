@@ -4,6 +4,7 @@ import { FormComponentBase } from '../form-component.base';
 import { UserService } from '../../service/user.service';
 import {ApiService} from '../../service/api.service';
 import {Router} from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-signin',
@@ -40,7 +41,6 @@ export class SigninComponent extends FormComponentBase implements OnInit {
       const response = this.userService.signin(this.signinForm.value);
       response.subscribe((data) => {
         if (data.status === this.apiService.SUCCESS) {
-          this.userService.authorization(data.body.token);
           this.router.navigateByUrl('/');
         }
       }, this.formInvalidHandle());
