@@ -91,18 +91,24 @@ export class ApiService {
     );
   }
 
+  /**
+   * 生成 GET 请求的 URL 参数后缀
+   * @param data object
+   * @return string
+   */
   private makeUrlfix(data: object = {}): string {
     const body = new URLSearchParams();
     for (const key of Object.keys(data)) {
       body.set(key, data[key]);
     }
-    return data === {} ? '?' + body : '';
+    return data !== {} ? '?' + body : '';
   }
 
   public get(url: string, data: object = {}): Observable<HttpResponse<any>> {
     const httpOptions = this.getHttpOptions();
     httpOptions.headers['Content-Type'] = this.MIME_URL;
     const fixedUrl = this.makeUrlfix(data);
+    console.log(fixedUrl);
     return this.pipeWorker(
       this.http.get<any>(
         this.baseUrl + url + fixedUrl, httpOptions
